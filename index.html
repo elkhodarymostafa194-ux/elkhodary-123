@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b18">
+<title>MR. MOSTAFA GLOBAL MOBILE</title>
+<style>
+:root{
+ --bg:#080b16;--panel:#11172a;--panel2:#19213a;
+ --line:#2b3453;--purple:#9566ff;--blue:#258bff;
+ --white:#f7f7ff;--muted:#a5aec8;--green:#47dba0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);
+ font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{
+ position:sticky;top:0;z-index:5;background:#0c1020ed;
+ backdrop-filter:blur(15px);border-bottom:1px solid var(--line);
+ padding:14px 5%;display:flex;justify-content:space-between;
+ align-items:center;gap:12px;flex-wrap:wrap
+}
+.logo{font-size:18px;font-weight:900;color:#c3a7ff}
+.logo span{color:#59aaff}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);border-radius:9px;
+ padding:10px 13px;color:white;background:var(--panel2)}
+.btn.primary{border:0;background:linear-gradient(110deg,var(--purple),var(--blue))}
+.btn.green{background:#176c50;border:0}
+.hero{
+ padding:55px 6%;min-height:330px;
+ background:radial-gradient(ellipse at 10% 30%,#40216b 0,transparent 48%),
+ linear-gradient(120deg,#10172d,#101024);
+ display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:25px
+}
+.eyebrow{color:#bba0ff;font-size:12px;letter-spacing:2px;font-weight:bold}
+.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.2;margin:15px 0}
+.hero h1 span{color:#aa88ff}
+.hero p{color:#b4bdd3;line-height:1.9;max-width:600px}
+.hero-art{font-size:110px;text-align:center;filter:drop-shadow(0 0 35px #7851ff)}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:22px}
+.stat{border-right:2px solid var(--purple);padding-right:12px}
+.stat b{display:block;font-size:20px}
+.stat small{color:var(--muted)}
+.container{max-width:1500px;margin:auto;padding:30px 5%}
+.section-head{display:flex;align-items:center;justify-content:space-between;
+ gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.section-head h2{font-size:22px;margin:0}
+.searchbar{display:grid;grid-template-columns:1fr 180px 160px;gap:10px;margin-bottom:16px}
+.field{width:100%;padding:13px 14px;border:1px solid var(--line);
+ border-radius:10px;background:#11172a;color:white;outline:none}
+.field:focus{border-color:var(--purple)}
+.filters{display:flex;gap:8px;overflow:auto;padding:3px 0 17px}
+.filters button{white-space:nowrap;border:1px solid var(--line);
+ background:#141b30;color:#dce0f2;border-radius:20px;padding:9px 15px}
+.filters button.active{background:var(--purple);border-color:var(--purple)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);
+ border-radius:15px;overflow:hidden;transition:.2s;min-width:0}
+.card:hover{transform:translateY(-4px);border-color:#8e69ff}
+.phone-art{
+ height:180px;display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(circle,#28345a,#101528);
+ position:relative;overflow:hidden
+}
+.phone{
+ width:78px;height:145px;border:4px solid #aeb8d5;
+ border-radius:17px;background:linear-gradient(145deg,#333d61,#090d1a);
+ box-shadow:0 0 30px #7554ff55;position:relative
+}
+.phone:before{content:"";position:absolute;top:6px;left:50%;
+ transform:translateX(-50%);width:24px;height:5px;border-radius:8px;background:#070a12}
+.phone:after{content:"";position:absolute;inset:23px 7px 7px;
+ border-radius:10px;background:linear-gradient(145deg,#9a70ff,#1c8cff,#11172b)}
+.card-body{padding:14px}
+.brand{font-size:11px;color:#b69bff;font-weight:bold}
+.card h3{font-size:15px;margin:8px 0;line-height:1.5}
+.spec{color:var(--muted);font-size:12px;line-height:1.8;min-height:40px}
+.price{color:#bba0ff;font-weight:bold;margin:12px 0}
+.availability{font-size:11px;color:var(--green)}
+.card-actions{display:flex;gap:7px;margin-top:12px}
+.card-actions button{flex:1;padding:10px 5px;font-size:11px}
+.card-actions .details{background:#26304c;color:white;border:1px solid var(--line)}
+.card-actions .add{background:linear-gradient(110deg,var(--purple),var(--blue));color:white;border:0}
+.empty{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted)}
+.comparebar{position:sticky;bottom:0;background:#161c31;
+ border:1px solid var(--line);padding:12px;z-index:3;
+ display:none;justify-content:space-between;align-items:center;gap:10px}
+.comparebar.show{display:flex}
+.overlay{position:fixed;inset:0;background:#000b;z-index:20;
+ display:none;align-items:center;justify-content:center;padding:14px}
+.overlay.show{display:flex}
+.dialog{background:#141b30;border:1px solid #414b70;
+ border-radius:16px;width:min(650px,100%);max-height:90vh;overflow:auto;padding:20px}
+.dialog h2{margin-top:5px}
+.dialog .close{float:left}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail{background:#202943;padding:12px;border-radius:9px}
+.detail small{color:var(--muted);display:block;margin-bottom:6px}
+.drawer{position:fixed;inset:0;background:#000b;z-index:25;
+ display:none;justify-content:flex-end}
+.drawer.show{display:flex}
+.drawer-content{width:min(450px,100%);background:#11182b;padding:20px;overflow:auto}
+.cart-row{padding:14px 0;border-bottom:1px solid var(--line)}
+.cart-row small{color:var(--muted)}
+.total{font-size:21px;color:#c5aaff;padding:20px 0}
+footer{background:#101528;padding:35px 5%;text-align:center;color:var(--muted);line-height:2}
+footer b{color:#c5aaff}
+.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.admin-form .wide{grid-column:1/-1}
+.notice{color:#ffcc82;font-size:12px;line-height:1.7}
+@media(max-width:950px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){
+ .hero{grid-template-columns:1fr;text-align:center;padding:40px 6%}
+ .hero-art{font-size:75px}
+ .stats{justify-content:center}
+ .searchbar{grid-template-columns:1fr 1fr}
+ .searchbar input{grid-column:1/-1}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .phone-art{height:145px}
+ .phone{transform:scale(.85)}
+ .card-body{padding:10px}
+ .card h3{font-size:13px}
+ .detail-grid,.admin-form{grid-template-columns:1fr}
+ .admin-form .wide{grid-column:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="logo">MR. MOSTAFA <span>GLOBAL MOBILE</span></div>
+  <small style="color:#929bb8">WORLDWIDE SMARTPHONE CATALOG</small>
+ </div>
+ <div class="header-actions">
+  <select class="field" id="country" style="width:auto" onchange="changeCountry()">
+   <option value="EG">🇪🇬 Egypt</option>
+   <option value="SA">🇸🇦 Saudi Arabia</option>
+   <option value="AE">🇦🇪 UAE</option>
+   <option value="US">🇺🇸 USA</option>
+   <option value="GB">🇬🇧 UK</option>
+   <option value="EU">🇪🇺 Europe</option>
+  </select>
+  <button class="btn" onclick="openAdmin()">⚙ إدارة</button>
+  <button class="btn primary" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+ </div>
+</header>
+
+<section class="hero">
+ <div>
+  <div class="eyebrow">THE WORLD OF SMARTPHONES</div>
+  <h1>اكتشف العالم.<br><span>اختر هاتفك.</span></h1>
+  <p>منصة عالمية لاستكشاف الهواتف الذكية ومقارنة مواصفاتها والعثور على خيارات الشراء حسب الدولة والتوفر.</p>
+  <button class="btn primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">استكشف الكتالوج ←</button>
+  <div class="stats">
+   <div class="stat"><b id="deviceCount">0</b><small>أجهزة بالكتالوج</small></div>
+   <div class="stat"><b id="brandCount">0</b><small>شركات</small></div>
+   <div class="stat"><b>GLOBAL</b><small>نطاق المنصة</small></div>
+  </div>
+ </div>
+ <div class="hero-art">📱🌐</div>
+</section>
+
+<main class="container" id="catalog">
+ <div class="section-head">
+  <h2>استكشف الهواتف الذكية</h2>
+  <span style="color:#a5aec8;font-size:12px">GLOBAL PHONE DIRECTORY</span>
+ </div>
+
+ <div class="searchbar">
+  <input class="field" id="search" placeholder="ابحث بالاسم أو رقم الموديل أو الشركة..." oninput="render()">
+  <select class="field" id="sort" onchange="render()">
+   <option value="name">ترتيب أبجدي</option>
+   <option value="brand">الشركة</option>
+   <option value="new">الأحدث في القائمة</option>
+  </select>
+  <select class="field" id="type" onchange="render()">
+   <option value="all">كل الأجهزة</option>
+   <option value="flagship">Flagship</option>
+   <option value="mid">Mid-range</option>
+   <option value="budget">Budget</option>
+  </select>
+ </div>
+
+ <div class="filters" id="filters"></div>
+ <div class="grid" id="products"></div>
+</main>
+
+<div class="comparebar" id="comparebar">
+ <span id="compareText">تم اختيار 0 أجهزة للمقارنة</span>
+ <div>
+  <button class="btn primary" onclick="compare()">قارن الآن</button>
+  <button class="btn" onclick="clearCompare()">مسح</button>
+ </div>
+</div>
+
+<div class="overlay" id="detailModal" onclick="outsideClose(event,'detailModal')">
+ <div class="dialog">
+  <button class="btn close" onclick="hide('detailModal')">✕</button>
+  <div id="detailContent"></div>
+ </div>
+</div>
+
+<div class="overlay" id="compareModal" onclick="outsideClose(event,'compareModal')">
+ <div class="dialog">
+  <button class="btn close" onclick="hide('compareModal')">✕</button>
+  <div id="compareContent"></div>
+ </div>
+</div>
+
+<div class="drawer" id="cartDrawer" onclick="if(event.target===this)hide('cartDrawer')">
+ <div class="drawer-content">
+  <button class="btn" onclick="hide('cartDrawer')">إغلاق ✕</button>
+  <h2>سلة الطلبات</h2>
+  <div id="cartItems"></div>
+  <div class="total" id="cartTotal">0</div>
+  <button class="btn primary" style="width:100%" onclick="checkout()">إرسال طلب واتساب</button>
+  <p class="notice">إضافة منتج للسلة لا تعني تأكيد توفره أو حجزه. سيتم تأكيد السعر والمخزون مع البائع.</p>
+ </div>
+</div>
+
+<div class="overlay" id="adminModal" onclick="outsideClose(event,'adminModal')">
+ <div class="dialog">
+  <button class="btn close" onclick="hide('adminModal')">✕</button>
+  <h2>لوحة إدارة المنتجات</h2>
+  <p class="notice">أضف أجهزة إلى الكتالوج التجريبي على هذا المتصفح. لا تظهر التغييرات للزوار الآخرين دون قاعدة بيانات.</p>
+  <form id="adminForm" class="admin-form">
+   <input class="field" id="newName" placeholder="اسم الهاتف" required>
+   <input class="field" id="newBrand" placeholder="الشركة" required>
+   <input class="field" id="newModel" placeholder="رقم الموديل">
+   <select class="field" id="newType">
+    <option value="flagship">Flagship</option>
+    <option value="mid">Mid-range</option>
+    <option value="budget">Budget</option>
+   </select>
+   <input class="field" id="newRam" placeholder="RAM مثل 12GB">
+   <input class="field" id="newStorage" placeholder="Storage مثل 256GB">
+   <input class="field" id="newPrice" type="number" min="0" placeholder="السعر المحلي (اختياري)">
+   <select class="field" id="newAvailability">
+    <option value="حسب التوفر">حسب التوفر</option>
+    <option value="متوفر">متوفر</option>
+    <option value="غير متوفر">غير متوفر</option>
+   </select>
+   <button class="btn primary wide" type="submit">إضافة إلى الكتالوج</button>
+  </form>
+  <hr style="border-color:#303956;margin:20px 0">
+  <button class="btn" onclick="exportCatalog()">تصدير بيانات الكتالوج JSON</button>
+  <button class="btn" onclick="resetCatalog()">استعادة بيانات البداية</button>
+ </div>
+</div>
+
+<footer>
+ <b>MR. MOSTAFA GLOBAL MOBILE</b><br>
+ GLOBAL SMARTPHONE DISCOVERY & COMMERCE<br>
+ © 2026 MR. MOSTAFA ELKHODARY<br>
+ <small>Catalog information is illustrative until connected to verified data sources.</small>
+</footer>
+
+<script>
+const starter=[
+["Apple","iPhone 17 Pro Max","A3257","flagship","12GB","256GB / 512GB / 1TB"],
+["Apple","iPhone 17 Pro","A3256","flagship","12GB","256GB / 512GB / 1TB"],
+["Apple","iPhone 17","A3258","flagship","8GB","256GB / 512GB"],
+["Apple","iPhone 16 Pro Max","A3084","flagship","8GB","256GB / 512GB / 1TB"],
+["Apple","iPhone 16 Pro","A3083","flagship","8GB","128GB / 256GB / 512GB / 1TB"],
+["Apple","iPhone 16","A3081","flagship","8GB","128GB / 256GB / 512GB"],
+["Apple","iPhone 15","A3090","mid","6GB","128GB / 256GB / 512GB"],
+["Samsung","Galaxy S25 Ultra","SM-S938","flagship","12GB","256GB / 512GB / 1TB"],
+["Samsung","Galaxy S25+","SM-S936","flagship","12GB","256GB / 512GB"],
+["Samsung","Galaxy S25","SM-S931","flagship","12GB","128GB / 256GB"],
+["Samsung","Galaxy Z Fold7","SM-F966","flagship","12GB","256GB / 512GB / 1TB"],
+["Samsung","Galaxy Z Flip7","SM-F766","flagship","12GB","256GB / 512GB"],
+["Samsung","Galaxy A56 5G","SM-A566","mid","8GB","128GB / 256GB"],
+["Samsung","Galaxy A36 5G","SM-A366","mid","8GB","128GB / 256GB"],
+["Xiaomi","Xiaomi 15 Ultra","25010PN30G","flagship","16GB","512GB / 1TB"],
+["Xiaomi","Xiaomi 15","25009PN","flagship","12GB","256GB / 512GB"],
+["Xiaomi","Redmi Note 14 Pro+","24115RA8","mid","8GB / 12GB","256GB / 512GB"],
+["Xiaomi","POCO F7 Ultra","24122RKC","flagship","12GB / 16GB","256GB / 512GB"],
+["Google","Pixel 10 Pro XL","G45","flagship","16GB","256GB / 512GB / 1TB"],
+["Google","Pixel 10 Pro","G44","flagship","16GB","128GB / 256GB / 512GB"],
+["Google","Pixel 9a","GTF7P","mid","8GB","128GB / 256GB"],
+["OnePlus","OnePlus 13","CPH2649","flagship","12GB / 16GB","256GB / 512GB"],
+["OnePlus","OnePlus 13R","CPH2645","mid","12GB","256GB"],
+["OPPO","Find X8 Pro","CPH2659","flagship","16GB","512GB"],
+["OPPO","Reno13 Pro","CPH2697","mid","12GB","256GB / 512GB"],
+["Realme","GT 7 Pro","RMX5011","flagship","12GB / 16GB","256GB / 512GB"],
+["Vivo","X200 Pro","V2413","flagship","16GB","512GB"],
+["Honor","Magic7 Pro","PRA-AN00","flagship","12GB","256GB / 512GB"],
+["Motorola","Edge 60 Pro","XT2507","mid","12GB","256GB"],
+["Nothing","Phone (3)","A024","flagship","12GB","256GB / 512GB"],
+["Huawei","Pura 80 Pro","Pura80","flagship","12GB","512GB"],
+["Infinix","GT 30 Pro","X6873","mid","12GB","256GB"],
+["Tecno","Camon 40 Pro","CM6","mid","8GB","256GB"],
+["Sony","Xperia 1 VII","XQ-FS54","flagship","12GB","256GB"],
+["ASUS","ROG Phone 9 Pro","AI2501","flagship","16GB","512GB"],
+["Nokia","G42 5G","TA-1581","budget","6GB","128GB"]
+].map((x,i)=>({
+ id:i+1,brand:x[0],name:x[1],model:x[2],type:x[3],
+ ram:x[4],storage:x[5],price:null,
+ availability:"حسب التوفر",custom:false
+}));
+
+let catalog=[...starter];
+let cart=[];
+let compareList=[];
+let selectedBrand="All";
+let currency="EGP";
+let country="EG";
+
+const currencies={
+ EG:{currency:"EGP",symbol:"ج.م"},
+ SA:{currency:"SAR",symbol:"ر.س"},
+ AE:{currency:"AED",symbol:"د.إ"},
+ US:{currency:"USD",symbol:"$"},
+ GB:{currency:"GBP",symbol:"£"},
+ EU:{currency:"EUR",symbol:"€"}
+};
+
+const $=id=>document.getElementById(id);
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+function brands(){
+ return ["All",...new Set(catalog.map(p=>p.brand).sort())];
+}
+function drawFilters(){
+ $("filters").innerHTML=brands().map(b=>
+ `<button class="${selectedBrand===b?"active":""}"
+ onclick="chooseBrand('${escapeHTML(b)}')">${b==="All"?"كل الشركات":escapeHTML(b)}</button>`
+ ).join("");
+}
+function chooseBrand(b){selectedBrand=b;drawFilters();render()}
+function money(price){
+ if(price===null||price===undefined||price==="")return "السعر حسب الدولة والتوفر";
+ return new Intl.NumberFormat("en-US",{style:"currency",currency}).format(Number(price));
+}
+function render(){
+ const q=$("search").value.toLowerCase().trim();
+ const type=$("type").value;
+ let list=catalog.filter(p=>{
+  const text=[p.name,p.brand,p.model].join(" ").toLowerCase();
+  return (selectedBrand==="All"||p.brand===selectedBrand)&&
+  text.includes(q)&&(type==="all"||p.type===type);
+ });
+ if($("sort").value==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
+ if($("sort").value==="brand")list.sort((a,b)=>a.brand.localeCompare(b.brand));
+ if($("sort").value==="new")list.sort((a,b)=>b.id-a.id);
+
+ $("deviceCount").textContent=catalog.length;
+ $("brandCount").textContent=new Set(catalog.map(p=>p.brand)).size;
+ $("products").innerHTML=list.length?list.map(p=>`
+ <article class="card">
+  <div class="phone-art"><div class="phone"></div></div>
+  <div class="card-body">
+   <div class="brand">${escapeHTML(p.brand)}</div>
+   <h3>${escapeHTML(p.name)}</h3>
+   <div class="spec">Model: ${escapeHTML(p.model||"غير محدد")}<br>
+   RAM: ${escapeHTML(p.ram||"غير محدد")}<br>
+   Storage: ${escapeHTML(p.storage||"غير محدد")}</div>
+   <div class="price">${money(p.price)}</div>
+   <div class="availability">● ${escapeHTML(p.availability)}</div>
+   <div class="card-actions">
+    <button class="details" onclick="details(${p.id})">المواصفات</button>
+    <button class="add" onclick="addCart(${p.id})">أضف للطلب</button>
+   </div>
+   <label style="display:block;margin-top:12px;color:#aeb8d1;font-size:11px">
+    <input type="checkbox" ${compareList.includes(p.id)?"checked":""}
+    onchange="toggleCompare(${p.id},this.checked)"> أضف للمقارنة
+   </label>
+  </div>
+ </article>`).join(""):'<div class="empty">لا توجد أجهزة مطابقة لبحثك.</div>';
+}
+function details(id){
+ const p=catalog.find(x=>x.id===id);
+ $("detailContent").innerHTML=`
+ <div class="phone-art" style="border-radius:12px"><div class="phone"></div></div>
+ <p class="eyebrow">${escapeHTML(p.brand)}</p>
+ <h2>${escapeHTML(p.name)}</h2>
+ <div class="detail-grid">
+  ${[
+   ["رقم الموديل",p.model],["الشركة",p.brand],
+   ["الرام",p.ram],["التخزين",p.storage],
+   ["الفئة",p.type],["التوفر",p.availability]
+  ].map(([k,v])=>`<div class="detail"><small>${k}</small>${escapeHTML(v||"غير متاح")}</div>`).join("")}
+ </div>
+ <h3>${money(p.price)}</h3>
+ <p class="notice">قد تختلف المواصفات ورقم الموديل حسب الدولة والمنطقة وإصدار الجهاز. يرجى التحقق من النسخة قبل الشراء.</p>
+ <button class="btn primary" onclick="addCart(${p.id});hide('detailModal')">أضف إلى الطلبات</button>`;
+ show("detailModal");
+}
+function toggleCompare(id,on){
+ if(on&&!compareList.includes(id)){
+  if(compareList.length>=3){alert("يمكن مقارنة 3 أجهزة كحد أقصى");render();return}
+  compareList.push(id);
+ }else compareList=compareList.filter(x=>x!==id);
+ $("comparebar").classList.toggle("show",compareList.length>0);
+ $("compareText").textContent="تم اختيار "+compareList.length+" أجهزة للمقارنة";
+}
+function compare(){
+ if(compareList.length<2){alert("اختر هاتفين على الأقل");return}
+ const items=compareList.map(id=>catalog.find(p=>p.id===id));
+ $("compareContent").innerHTML="<h2>مقارنة الهواتف</h2><div class='detail-grid'>"+
+ items.map(p=>`<div class="detail"><b>${escapeHTML(p.name)}</b>
+ <p>الشركة: ${escapeHTML(p.brand)}</p>
+ <p>الموديل: ${escapeHTML(p.model)}</p>
+ <p>RAM: ${escapeHTML(p.ram)}</p>
+ <p>Storage: ${escapeHTML(p.storage)}</p>
+ <p>${money(p.price)}</p></div>`).join("")+"</div>";
+ show("compareModal");
+}
+function clearCompare(){compareList=[];$("comparebar").classList.remove("show");render()}
+function addCart(id){
+ const p=catalog.find(x=>x.id===id);
+ if(p.availability==="غير متوفر"){alert("هذا الجهاز غير متوفر حاليًا");return}
+ if(!cart.includes(id))cart.push(id);
+ $("cartCount").textContent=cart.length;
+ alert("تمت إضافة "+p.name+" إلى قائمة الطلبات");
+}
+function openCart(){
+ $("cartItems").innerHTML=cart.length?cart.map(id=>{
+ const p=catalog.find(x=>x.id===id);
+ return `<div class="cart-row"><b>${escapeHTML(p.name)}</b><br>
+ <small>${escapeHTML(p.model)} — ${money(p.price)}</small>
+ <button class="btn" onclick="removeCart(${id})">إزالة</button></div>`;
+ }).join(""):"لا توجد أجهزة في قائمة الطلبات.";
+ $("cartTotal").textContent="الأسعار والتوفر تخضع للتأكيد";
+ show("cartDrawer");
+}
+function removeCart(id){cart=cart.filter(x=>x!==id);$("cartCount").textContent=cart.length;openCart()}
+function checkout(){
+ if(!cart.length){alert("أضف جهازًا أولًا");return}
+ const lines=cart.map(id=>{const p=catalog.find(x=>x.id===id);return p.name+" ("+p.model+")"}).join("\n");
+ const phone="201000000000";
+ const msg="Hello, I am interested in these phones:\n"+lines+
+ "\nCountry: "+$("country").selectedOptions[0].text+
+ "\nPlease confirm price and availability.";
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank");
+}
+function changeCountry(){
+ country=$("country").value;
+ currency=currencies[country].currency;
+ render();
+}
+function openAdmin(){show("adminModal")}
+$("adminForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const p={
+  id:Math.max(0,...catalog.map(x=>x.id))+1,
+  name:$("newName").value.trim(),
+  brand:$("newBrand").value.trim(),
+  model:$("newModel").value.trim()||"غير محدد",
+  type:$("newType").value,
+  ram:$("newRam").value.trim()||"غير محدد",
+  storage:$("newStorage").value.trim()||"غير محدد",
+  price:$("newPrice").value?Number($("newPrice").value):null,
+  availability:$("newAvailability").value,custom:true
+ };
+ catalog.push(p);persist();drawFilters();render();e.target.reset();
+ alert("تمت إضافة الجهاز إلى الكتالوج");
+});
+function persist(){
+ try{localStorage.setItem("mostafaGlobalCatalog",JSON.stringify(catalog))}
+ catch(e){alert("تعذر حفظ البيانات على هذا المتصفح")}
+}
+function restore(){
+ try{
+  const saved=JSON.parse(localStorage.getItem("mostafaGlobalCatalog"));
+  if(Array.isArray(saved)&&saved.length)catalog=saved;
+ }catch(e){}
+}
+function exportCatalog(){
+ const blob=new Blob([JSON.stringify(catalog,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="mostafa-global-catalog.json";a.click();
+ URL.revokeObjectURL(url);
+}
+function resetCatalog(){
+ if(!confirm("استعادة الكتالوج الأساسي؟"))return;
+ catalog=[...starter];persist();drawFilters();render();
+}
+function show(id){$(id).classList.add("show")}
+function hide(id){$(id).classList.remove("show")}
+function outsideClose(e,id){if(e.target.id===id)hide(id)}
+
+restore();
+drawFilters();
+render();
+</script>
+</body>
+</html>
